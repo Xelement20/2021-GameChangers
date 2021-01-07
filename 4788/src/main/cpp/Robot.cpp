@@ -20,11 +20,11 @@ void Robot::RobotInit() {
 	xbox = new frc::XboxController(0);
 
 	//Motor examples 
-	_victorMotorL = new wml::VictorSrx(8);
+	_victorMotorL = new wml::VictorSpx(8);
 	_talonMotorL = new wml::TalonSrx(1);
 
 	_talonMotorR = new wml::TalonSrx(2);
-	_victorMotorR = new wml::VicorSrx(9);
+	_victorMotorR = new wml::VicorSpx(9);
 
 	_victorMotorL->SetInverted(false);
 	_talonMotorR->SetInverted(false);
@@ -52,7 +52,7 @@ void Robot::TeleopPeriodic() {
 	//motor examples
 
 
-	leftSpeed = xbox->GetY(hand::kleftHand);
+	leftSpeed = xbox->GetY(hand::kLeftHand);
 	if (leftSpeed >= deadzone) { //acounts for the deadzone
 		_talonMotorL->Set(0);
 		_victorMotorL->Set(0)
@@ -85,4 +85,3 @@ void Robot::TeleopPeriodic() {
 // Test Logic
 void Robot::TestInit() {}
 void Robot::TestPeriodic() {}
-// cj sucks at coding
