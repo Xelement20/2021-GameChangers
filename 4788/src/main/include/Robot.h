@@ -54,8 +54,15 @@ class Robot : public frc::TimedRobot {
 
  private:
 	//motors
-	frc::Spark *_sparkMotor;
+
 	wml::TalonSrx *_talonMotor;
+	wml::VictorSrx*_victorMotor;
+
+	wml::VictorSrx*_victorMotor1;
+	wml::TalonSrx*_talonMotor1;
+
+	
+
 
 	//pneumatics stuff
 	wml::actuators::Compressor _compressor{};

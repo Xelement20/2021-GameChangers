@@ -10,8 +10,8 @@ double lastTimeStamp;
 double dt; //stands for delta time 
 
 //add other variables here
-double sparkSpeed;
-double talonSpeed;
+double rightSpeed;
+double leftSpeed;
 double constexpr deadzone = 0.1;
 
 // Robot Logic
@@ -20,11 +20,17 @@ void Robot::RobotInit() {
 	xbox = new frc::XboxController(0);
 
 	//Motor examples 
-	_sparkMotor = new frc::Spark(0);
-	_talonMotor = new wml::TalonSrx(1);
+	_victorMotorL = new wml::VictorSrx(8);
+	_talonMotorL = new wml::TalonSrx(1);
 
-	_sparkMotor->SetInverted(true);
-	_talonMotor->SetInverted(false);
+	_talonMotorR = new wml::TalonSrx(2);
+	_victorMotorR = new wml::VicorSrx(9);
+
+	_victorMotorL->SetInverted(false);
+	_talonMotorR->SetInverted(false);
+
+	_talonMotorL->SetInverted(false);
+	_victorMotorR->SetInverted(false);
 }
 
 void Robot::RobotPeriodic() {}
@@ -44,16 +50,21 @@ void Robot::TeleopPeriodic() {
 	dt = currentTime - lastTimeStamp;
 
 	//motor examples
-	sparkSpeed = xbox->GetY(hand::kLeftHand);
-	_sparkMotor->Set(sparkSpeed);
 
 
-	talonSpeed = xbox->GetTriggerAxis(hand::kRightHand);
-	if (talonSpeed >= deadzone) { //acounts for the deadzone
-		_talonMotor->Set(talonSpeed);
+	leftSpeed = xbox->GetY(hand::kleftHand);
+	if (leftSpeed >= deadzone) { //acounts for the deadzone
+		_talonMotorL->Set(0);
+		_victorMotorL->Set(0)
 	} else {
-		_talonMotor->Set(0);
+		_talonMotorL = 0;
+		_victorMotor = 0;
 	}
+	
+	rightSpeed = xbox->GetY(hand::kRightHand); //Sets the speed of the right db motor to the xbox left stick
+    _talonMotorR->Set(rightSpeed);
+    _victorMotorR->Set(rightSpeed);
+
 
 	// ^ the equivilant using a conditional statement 
 	//talonSpeed = xbox->GetTriggerAxis(hand::kRightHand) > deadzone ? xbox->GetTriggerAxis(hand::kRightHand) : 0; _talonMotor->Set(talonSpeed);
@@ -74,3 +85,4 @@ void Robot::TeleopPeriodic() {
 // Test Logic
 void Robot::TestInit() {}
 void Robot::TestPeriodic() {}
+// cj sucks at coding
